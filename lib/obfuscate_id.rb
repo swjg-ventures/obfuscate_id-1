@@ -23,9 +23,11 @@ module ObfuscateId
       if has_obfuscated_id? && !options[:no_obfuscated_id]
         if scope.is_a?(Array) && !scope.first.is_a?(Fixnum)
           scope.map! {|a| deobfuscate_id(a).to_i}
-        elsif !scope.is_a?(Fixnum)
-          scope = deobfuscate_id(scope)
         elsif scope.is_a?(String) && (scope.to_i.to_s.length != scope.length)
+          scope = deobfuscate_id(scope)
+        elsif scope.is_a?(String)
+          scope = scope.to_i
+        elsif !scope.is_a?(Fixnum)
           scope = deobfuscate_id(scope)
         end
       end
